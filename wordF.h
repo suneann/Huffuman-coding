@@ -1,28 +1,33 @@
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
-
 using namespace std;
+
 
 class word//单词类 
 {
-	private:
-	    
-	    double chance[3500];
-	    
+	private:	    
+//	    double chance[3500];//计算出现概率，用不上    
 	public:
-		string numW[3500];
 		
-		int wordI[3500];
+		string numW[3500];//单词类型 
+		int wordI[3500];//频数 
 		
-		static double allword;//统计一共有多少个不同单词 
-		static int countww;//统计总词数 
+		static long int charnum;//字符总数 
+		
+		static int allword;// 统单词类型 
+		static int countww;//单词数 
+		
 		void sort(string ws[3500],int wn[3500],int wordnums);//排序 
 		bool CompareW(string word[3500],string targetw,int current);//查重 
 		void CalToWord(string wsl,int lenw); //赋值、统计 
+		friend class Huffuman;
 };
-double word::allword=0;
-int word::countww=0;
+
+
+int word::allword=0;//  单词类型 
+int word::countww=0;// 单词数
+long int word::charnum=0;
 
 void word::sort(string ws[3500],int wn[3500],int wordnums)//按出现频数排序 
 {
@@ -60,6 +65,7 @@ void word::CalToWord(string wsl,int lenw)
     string tempW="";
 	int i,j,k=0,index=0;
 	bool FindNew;
+	charnum=lenw; 
 	
 	for (i=0;i<3500;i++)//初始化 
 	{
@@ -140,15 +146,14 @@ void word::CalToWord(string wsl,int lenw)
 		if(FindNew) index++; // 指向下一个单词
 	}
 	sort(numW,wordI,index);
-    allword=index-1;
+    allword=index;
 	for (i=0;i<allword;i++)
 	{
 		countww+=wordI[i];
-//		cout<<setw(15)<<numW[i]<<setw(15)<<wordI[i]<<setw(15)<<chance[i]<<endl;//             查看编码表 
+		cout<<setw(15)<<numW[i]<<setw(15)<<wordI[i]<<setw(15)<<endl;//             查看编码表 
 	}
-
 	
-	cout<<"单词总数："<<countww<<"个\t"<<"单词种类："<<allword<<" 种"<<endl;              //             查看单词 总数 与有多少种不同的单词 
+	cout<<"单词总数："<<countww<<"个\t"<<"单词种类："<<allword<<" 种"<<endl;  //             查看单词 总数 与有多少种不同的单词 
 } 
 
 
